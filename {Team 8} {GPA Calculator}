@@ -1,0 +1,47 @@
+use std::io;
+
+fn main() {
+    println!("Enter number of classes:");
+
+    let mut classes = String::new();
+    io::stdin().read_line(&mut classes).unwrap();
+
+    let classes: u32 = classes.trim().parse().unwrap();
+
+    let mut total_credits = 0.0;
+    let mut grade_points = 0.0;
+
+    for i in 1..=classes {
+        println!("Enter credits for class {}:", i);
+
+        let mut credits = String::new();
+        io::stdin().read_line(&mut credits).unwrap();
+
+        let credits: f32 = credits.trim().parse().unwrap();
+
+        println!("Enter letter grade for class {}:", i);
+
+        let mut grade = String::new();
+        io::stdin().read_line(&mut grade).unwrap();
+
+        let grade = grade.trim();
+        let grade_point = match grade {
+            "A" => 4.0,
+            "B" => 3.0,
+            "C" => 2.0,
+            "D" => 1.0,
+            "F" => 0.0,
+            _ => {
+                println!("Invalid grade entered.");
+                continue;
+            }
+        };
+
+        total_credits += credits;
+        grade_points += credits * grade_point;
+    }
+
+    let gpa = grade_points / total_credits;
+
+    println!("GPA: {:.2}", gpa);
+}
